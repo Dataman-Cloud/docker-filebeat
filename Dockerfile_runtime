@@ -1,0 +1,17 @@
+FROM demoregistry.dataman-inc.com/library/centos7-base:latest
+
+MAINTAINER Jinye Liu "jyliu@dataman-inc.com"
+
+ENV PACKAGE_URL https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.0.2-x86_64.rpm
+
+# Install server
+RUN yum install -y $PACKAGE_URL \
+  && yum clean all && rm -rf /var/cache/yum/*
+
+COPY docker-entrypoint.sh /
+COPY filebeat.yml /filebeat.yml
+
+RUN chmod +x *.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/usr/share/filebeat/bin/filebeat", "-e", "/filebeat.yml"]
