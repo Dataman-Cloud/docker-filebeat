@@ -19,7 +19,8 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /opt/app/logs/*/*.log
+    - PATHS
+    #- /opt/app/logs/*/*.log
     #- c:\programdata\elasticsearch\logs\*
   document_type: DOCUMENT_TYPE
 
