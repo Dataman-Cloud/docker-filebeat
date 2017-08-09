@@ -1,0 +1,12 @@
+FROM demoregistry.dataman-inc.com/library/centos7-base:latest
+MAINTAINER pro zpang@dataman-inc.com
+
+ENV FILEBEAT_VERSION=5.5.1
+ENV FILEBEAT_PKG_NAME=filebeat-${FILEBEAT_VERSION}-x86_64.rpm
+
+# Install filebeat
+RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/$FILEBEAT_PKG_NAME && \
+	yum install  -y $FILEBEAT_PKG_NAME && \
+	rm -Rf $FILEBEAT_PKG_NAME && \
+        yum clean all
+ENTRYPOINT ["/usr/share/filebeat/bin/filebeat"]

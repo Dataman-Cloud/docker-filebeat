@@ -1,8 +1,9 @@
-docker run -d \
-        -e LOGSTASH_HOST=10.157.21.2 \
-        -e LOGSTASH_PORT=5043 \
-	-e DOCUMENT_TYPE=tengine_access \
-        -e PATHS="/docker/tengine/logs/*-access.log" \
-	-v /data/filebeat:/usr/share/filebeat/bin/data \
-	-v /data/opt/app/logs:/opt/app/logs \
-        library/centos7-filebeat-5.0.2
+#!/bin/bash
+docker run -d --name dataman-filebeat \
+               --log-driver=json-file \
+               --label BEAT_EXCLUDE=true \
+               -v /data/docker:/data/docker \
+               -v /data/config/filebeat:/data/config/filebeat \
+               -v /data/log/filebeat:/data/log/filebeat \
+               demoregistry.dataman-inc.com/library/centos7-filebeat \
+               -c /data/config/filebeat/filebeat.yml
